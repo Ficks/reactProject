@@ -1,0 +1,18 @@
+.login {
+  padding-top: 15%;
+  width: 500px;
+  margin: 0 auto;
+}
+.login .ordi {
+  padding-left: 35px;
+}
+.login .ordi .login-form-forgot {
+  float: right;
+}
+.login .ant-btn-primary {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  height: 40px;
+  line-height: 40px;
+}
