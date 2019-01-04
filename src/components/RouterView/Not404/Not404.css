@@ -150,3 +150,10 @@ a.more-link {
     margin-top: 50px;
     letter-spacing: 1px;
 }
+
+.not404 h1 {
+    text-align: center;
+    padding-top: 120px;
+    font-size: 20px;
+    color: #fff;
+}

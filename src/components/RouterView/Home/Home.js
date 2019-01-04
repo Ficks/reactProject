@@ -13,7 +13,7 @@ import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 
-import { Breadcrumb } from 'antd'
+import { Breadcrumb, Button, Icon } from 'antd'
 
 
 class Home extends Component {
@@ -38,6 +38,11 @@ class Home extends Component {
     }
 
 
+    toggleCollapsed = () => {
+        this.setState({
+            collapsed: !this.state.collapsed,
+        });
+    }
 
     render() {
         let is404 = false;
@@ -62,12 +67,18 @@ class Home extends Component {
                 </Breadcrumb.Item>
             );
         });
-        let locationDom = <Breadcrumb className="location">
-            {extraBreadcrumbItems}
-        </Breadcrumb>;
+        let locationDom =
+            <div className="location">
+                <Button type="primary" onClick={() => this.toggleCollapsed()}>
+                    <Icon type={this.state.collapsed ? 'menu-fold' : 'menu-unfold'} />
+                </Button>
+                <Breadcrumb>
+                    {extraBreadcrumbItems}
+                </Breadcrumb>
+            </div>;
         return (
             <div className="wrap">
-                <Nav callBack={this.callBack.bind(this)} />
+                <Nav collapsed={this.state.collapsed} />
                 <div className="content_wrap" style={{ paddingLeft: this.state.collapsed ? 256 : 80 }}>
                     <div className="main">
                         {is404 ? null : locationDom}
