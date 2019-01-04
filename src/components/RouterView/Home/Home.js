@@ -5,30 +5,80 @@ import { connect } from 'react-redux';
 import Nav from '../../Common/Nav';
 import Index from '../../Modules/Index/Index';
 import List from '../../Modules/List/List';
+import Not404 from '../../RouterView/Not404/Not404'
 
 // 路由
 // import Router from '../router/index';
-import { Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
+
+import { Breadcrumb } from 'antd'
 
 
 class Home extends Component {
     constructor(props) {
         super(props);
-        this.props.history.push("/Index");
+        if (this.props.location.pathname == "/") this.props.history.push("/Index");
     }
+
+    state = {
+        collapsed: true,
+        breadcrumbArr: []
+    }
+
+    pathNameSplit() {
+    }
+
+    callBack(val) {
+        // nav收缩状态
+        this.setState({
+            collapsed: val
+        })
+    }
+
+
+
     render() {
+        let is404 = false;
+        var breadcrumbNameMap = {
+            Index: "首页",
+            List: "列表页"
+        }
         // 判断用户是否登录
         if (!this.props.isLogin) {
-            return <Redirect to="/Login" push={false} />
+            // return <Redirect to="/Login" push={false} />
         }
+        let pathSnippets = this.props.location.pathname.split('/').filter(i => i);
+        const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+            const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+            is404 = !breadcrumbNameMap[_];
+            console.log(is404)
+            return (
+                <Breadcrumb.Item key={url}>
+                    <Link to={url}>
+                        {breadcrumbNameMap[_]}
+                    </Link>
+                </Breadcrumb.Item>
+            );
+        });
+        let locationDom = <Breadcrumb className="location">
+            {extraBreadcrumbItems}
+        </Breadcrumb>;
         return (
             <div className="wrap">
-                <div><Nav /></div>
-                <div>
-                    <Route exact path="/Index" component={Index} />
-                    <Route exact path="/List" component={List} />
+                <Nav callBack={this.callBack.bind(this)} />
+                <div className="content_wrap" style={{ paddingLeft: this.state.collapsed ? 256 : 80 }}>
+                    <div className="main">
+                        {is404 ? null : locationDom}
+                        <Switch>
+                            <Route title="首页" path="/Index" component={Index} />
+                            <Route exact title="列表页" path="/List" component={List} />
+                            <Route component={Not404} />
+                        </Switch>
+                    </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
@@ -42,5 +92,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
     };
 }
-var HomeApp = connect(mapStateToProps, mapDispatchToProps)(Home)
+var HomeApp = withRouter(connect(mapStateToProps, mapDispatchToProps)(Home))
 export default HomeApp;

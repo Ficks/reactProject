@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-class Index extends Component {
+class List extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            <div className="container">
-                <h1>主页</h1>
+            <div>
+                <h2>嘻嘻哈哈哈</h2>
             </div>
         )
     }
 }
 
-export default Index;
+export default List;

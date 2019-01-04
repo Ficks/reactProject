@@ -6,6 +6,10 @@ import './Nav.css';
 const SubMenu = Menu.SubMenu;
 
 class Nav extends Component {
+    constructor(props) {
+        super(props)
+    }
+    
     state = {
         collapsed: false,
     }
@@ -14,11 +18,13 @@ class Nav extends Component {
         this.setState({
             collapsed: !this.state.collapsed,
         });
+        this.props.callBack(this.state.collapsed);
     }
 
     render() {
         return (
-            <div className="nav" style={{ width: 256 }}>
+            <div className="nav">
+
                 <Button type="primary" onClick={this.toggleCollapsed} style={{ marginBottom: 16 }}>
                     <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
                 </Button>
