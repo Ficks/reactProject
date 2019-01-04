@@ -19,7 +19,7 @@ import { Breadcrumb, Button, Icon } from 'antd'
 class Home extends Component {
     constructor(props) {
         super(props);
-        if (this.props.location.pathname == "/") this.props.history.push("/Index");
+        // if (this.props.location.pathname == "/") this.props.history.push("/Index");
     }
 
     state = {
@@ -54,11 +54,14 @@ class Home extends Component {
         if (!this.props.isLogin) {
             // return <Redirect to="/Login" push={false} />
         }
+        // /匹配到Index
+        if (this.props.location.pathname == "/") {
+            return <Redirect to="/Index" push={false} />
+        }
         let pathSnippets = this.props.location.pathname.split('/').filter(i => i);
         const extraBreadcrumbItems = pathSnippets.map((_, index) => {
             const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
             is404 = !breadcrumbNameMap[_];
-            console.log(is404)
             return (
                 <Breadcrumb.Item key={url}>
                     <Link to={url}>
