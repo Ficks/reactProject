@@ -66,7 +66,7 @@ class NormalLoginForm extends Component {
                                     { max: 11, message: '账号长度最大为11位数' },
                                     { min: 6, message: '账号长度最少为6位数' },
                                 ],
-                                initialValue: 'admin'
+                                initialValue: 'admin1'
                             })(
                                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="账号" />
                             )}
